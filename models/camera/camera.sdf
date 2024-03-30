@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <model name="camera">
+        <pose>0 0 0.035 0 0 0</pose>
+        <link name="link">
+            <inertial>
+                <pose>0.01 0.025 0.025 0 0 0</pose>
+                <mass>0.01</mass>
+                <inertia>
+                    <ixx>4.15e-6</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>2.407e-6</iyy>
+                    <iyz>0</iyz>
+                    <izz>2.407e-6</izz>
+                </inertia>
+            </inertial>
+            <!-- <visual name="visual"><pose>0 0 0 0 0 0</pose><geometry><mesh></mesh></geometry></visual> -->
+            <sensor type="camera" name="camera1">
+                <update_rate>1</update_rate>
+                <camera name="head">
+                    <horizontal_fov>1.2</horizontal_fov>
+                    <image>
+                        <width>420</width>
+                        <height>240</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <distortion>
+                        <k1>0.0</k1>
+                        <k2>0.0</k2>
+                        <k3>0.0</k3>
+                        <p1>0.0</p1>
+                        <p2>0.0</p2>
+                    </distortion>
+                </camera>
+                <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                    <ros>
+                        <namespace>uav1</namespace>
+                        <argument>image_raw:=custom</argument>
+                        <argument>camera_info:=custom_info</argument>
+                    </ros>
+                    <camera_name>camera1</camera_name>
+                    <frame_name>camera_link</frame_name>
+                    <hack_baseline>0.07</hack_baseline>
+                </plugin>
+            </sensor>
+        </link>
+    </model>
+</sdf>
